@@ -3,6 +3,9 @@ import { motion } from 'framer-motion';
 import Spline from '@splinetool/react-spline';
 import './App.css';
 
+// helper to resolve public/ assets correctly (works with import.meta.env.BASE_URL)
+const asset = (p) => import.meta.env.BASE_URL + String(p).replace(/^\//, '');
+
 export const BackgroundCanvas = ({ isDarkMode, currentSection }) => {
   const canvasRef = useRef(null);
 
@@ -193,8 +196,7 @@ const App = () => {
                   <span className="social-in" aria-hidden="true">in</span>
                 </a>
                 <a href="https://github.com/Akhil-Ferry" target="_blank" rel="noopener noreferrer" aria-label="GitHub" title="GitHub" className="github-link">
-                  {/* place github.svg in /public (e.g. public/github.svg) */}
-                  <img src="/github.svg" alt="GitHub" className="social-img" />
+                  <img src={asset('github.svg')} alt="GitHub" className="social-img" />
                 </a>
                 <a href="https://leetcode.com/u/pulipakaakhil/" target="_blank" rel="noopener noreferrer" aria-label="LeetCode" title="LeetCode">
                   <span className="code-symbol" aria-hidden="true">&lt;/&gt;</span>
@@ -203,7 +205,7 @@ const App = () => {
             </motion.div>
 
             <motion.div className="profile-image-container" initial={{ opacity: 0, scale: 0.8 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6, delay: 0.4 }} viewport={{ once: true }}>
-              <img src={isDarkMode ? '/mask-white.png' : '/mask-black.png'} alt="Akhil Pulipaka" className="profile-image" />
+              <img src={asset(isDarkMode ? 'mask-white.png' : 'mask-black.png')} alt="Akhil Pulipaka" className="profile-image" />
             </motion.div>
           </div>
         </div>
@@ -234,7 +236,7 @@ const App = () => {
             ].map((skill, index) => (
               <motion.div key={skill.name} className="skill-card" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} whileHover={{ y: -5, scale: 1.02 }} transition={{ duration: 0.4, delay: index * 0.1 }} viewport={{ once: true }}>
                 <div className="skill-icon-wrapper">
-                  <img src={skill.icon} alt={skill.name} className="skill-icon" />
+                  <img src={asset(skill.icon)} alt={skill.name} className="skill-icon" />
                 </div>
                 <h3 className="skill-name">{skill.name}</h3>
                 <div className="skill-progress">
@@ -275,7 +277,7 @@ const App = () => {
               }
             ].map((project, index) => (
               <motion.div key={project.title} className="project-card" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} whileHover={{ y: -10 }} transition={{ duration: 0.6, delay: index * 0.2 }} viewport={{ once: true }}>
-                <div className="project-image" style={{ backgroundImage: `url(${project.image})` }}>
+                <div className="project-image" style={{ backgroundImage: `url(${asset(project.image)})` }}>
                   <div className="project-overlay">
                     <button className="view-project-btn">View Project</button>
                   </div>
